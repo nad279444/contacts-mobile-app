@@ -1,19 +1,27 @@
-
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import LoginScreen from './components/LoginScreen'
+//import ContactsScreen from "./components/ContactsScreen";
+
 
 export default function App() {
-  
   return (
     <View style={styles.container}>
-      <LoginScreen />  
+      {/*<ContactsScreen />*/}
+      <LoginScreen /> 
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-   
+    marginTop: 70
   },
 });
+
+
+   
+
+
+
+
