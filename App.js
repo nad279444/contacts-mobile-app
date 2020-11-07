@@ -1,29 +1,15 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import LoginScreen from './screens/LoginScreen'
-import ContactsScreen from "./screens/ContactsScreen";
-import SignupScreen from "./screens/SignupScreen"
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-
-const Stack = createStackNavigator()
+import { StyleSheet, } from "react-native";
+import {Provider} from 'react-redux'
+import store from "./src/redux/reducers/store"
+import AppContainer from './src/Navigation/navigation'
 
 
 export default function App() {
   return (
-    <NavigationContainer >
-      <Stack.Navigator>
-        <Stack.Screen 
-          options={{
-            header: () => null
-          }}
-          name="Sign Up" 
-          component={SignupScreen}/>
-        <Stack.Screen name="Login" component={LoginScreen}/>
-        <Stack.Screen name="ContactList" component={ContactsScreen}/>
-      </Stack.Navigator>
-     
-    </NavigationContainer>
+    <Provider store={store}>
+      <AppContainer />
+    </Provider>
   );
 }
 

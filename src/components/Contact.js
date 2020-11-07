@@ -9,7 +9,7 @@ import {
 export default function Contact({name,phone}) {
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/yellow.jpg")} style={styles.image} />
+      <Image source={require("../../assets/yellow.jpg")} style={styles.image} />
       <View style={styles.infoContainer}>
         <Text style={styles.name} numberOfLines={1}> {name} </Text>
         <Text> {phone}</Text>
