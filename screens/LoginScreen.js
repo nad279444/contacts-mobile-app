@@ -1,7 +1,7 @@
 import React,{ useState } from 'react'
 import { StyleSheet, ScrollView,Text, View,TextInput,TouchableOpacity } from 'react-native';
 
-export default function LoginScreen() {
+export default function LoginScreen({navigation}) {
     const[state,setState] = useState({
         email: '',
         password: ''
@@ -33,13 +33,16 @@ export default function LoginScreen() {
                 <Text style={styles.forgotPassword}>Forget Password</Text>
             </View>
             <View>
-                    <TouchableOpacity style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.buttonContainer} onPress={() => navigation.navigate('ContactList')}>
                         <Text style={styles.buttonText}>Log In</Text>
                     </TouchableOpacity>
             </View>
             <View style={styles.noAccountContainer}>
                 <Text style={styles.noAccountText}>Don't have an account?</Text>
-                <Text style={styles.signUp}>Sign Up</Text>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                         <Text style={styles.signUp}>Sign Up</Text>
+                </TouchableOpacity>
+               
             </View>
             
             
