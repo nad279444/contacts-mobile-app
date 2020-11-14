@@ -1,35 +1,45 @@
 import React,{ useState } from 'react'
 import { StyleSheet, ScrollView,Text, View,TextInput,TouchableOpacity } from 'react-native';
-
-export default function SignupScreen({navigation}) {
+import {connect} from 'react-redux'
+import {createEmailAccount,registerError} from '../redux/actions/authActions'
+ function SignupScreen({navigation,auth,registerError,createEmailAccount}) {
     const[state,setState] = useState({
-        userName: '',
         email: '',
         password: '',
-        passwordAgain: ''
+        confirm: ''
     })
+
+    const handleUpdateState = (name,value) => {
+        console.log(name,value)
+        setState({
+            ...state, [name]:value
+        })
+    }
+
+    const handleOnSubmit = () => {
+        if(state.password !== state.confirm){
+           registerError('passwords do not match') 
+           return; 
+         }
+         console.log(state)
+          createEmailAccount(state.email,state.password)
+    }
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+            
             <View style={styles.loginTextContainer}>
                 <Text style={styles.loginText}>Sign Up</Text>
             </View>
             <View>
-                <TextInput 
-                placeholder="UserName" 
-                style={styles.Input} 
-                placeholderTextColor="#aaaaaa"
-                value={state.userName}
-                onChangeText={(userName) => {
-                    setState({userName})
-                }}/>
+                {auth.error.register && <Text style={{color: 'red'}}>{auth.error.register}</Text> }
                  <TextInput 
                 placeholder="Email" 
                 style={styles.Input} 
                 placeholderTextColor="#aaaaaa"
                 value={state.email}
-                onChangeText={(email) => {
-                    setState({email})
-                }}/>
+                onChangeText={(text) => {
+                    handleUpdateState('email',text)}}
+                />
                 <TextInput
                 autoCorrect={false} 
                 placeholder="Password"
@@ -37,8 +47,8 @@ export default function SignupScreen({navigation}) {
                 secureTextEntry={true} 
                 style={styles.Input}
                 value={state.password}
-                onChangeText={(password) => {
-                    setState({password})
+                onChangeText={(text) => {
+                    handleUpdateState('password',text)
                 }}/>
                 <TextInput
                 autoCorrect={false} 
@@ -46,14 +56,14 @@ export default function SignupScreen({navigation}) {
                 placeholderTextColor="#aaaaaa"
                 secureTextEntry={true} 
                 style={styles.Input}
-                value={state.passwordAgain}
-                onChangeText={(passwordAgain) => {
-                    setState({passwordAgain})
+                value={state.confirm}
+                onChangeText={(text) => {
+                    handleUpdateState('confirm',text)
                 }}/>
                 <Text style={styles.forgotPassword}>Forget Password</Text>
             </View>
             <View>
-                    <TouchableOpacity style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.buttonContainer} onPress={handleOnSubmit}>
                         <Text style={styles.buttonText}>Sign Up</Text>
                     </TouchableOpacity>
             </View>
@@ -127,4 +137,9 @@ const styles = StyleSheet.create({
     }
 
   });
+
+  const mapStateToProps= (state) => {
+     return {auth:state}
+  }
   
+  export default connect(mapStateToProps,{createEmailAccount,registerError})(SignupScreen)
